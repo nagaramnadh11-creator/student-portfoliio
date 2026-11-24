@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Personal Portfolio | Web Developer & UI/UX Designer</title>
+    
+    <!-- Google Fonts: Poppins for Headings & Inter for Clean Body Readability -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6 for Crisp Vector Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN for Responsive Grid & Layout Utilities -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- =========================================================================
+         CSS3 SECTION (Can be extracted directly into Portfolio/style.css)
+         ========================================================================= -->
+    <style>
+        /* CSS Custom Properties (Design Tokens) */
+        :root {
+            --bg-primary: #09090b;       /* Deep Obsidian Black */
+            --bg-secondary: #121216;     /* Elevated Charcoal */
+            --bg-card: #18181d;          /* Card Surface */
+            --accent-red: #e11d48;       /* Crimson Red Primary */
+            --accent-red-glow: rgba(225, 29, 72, 0.35);
+            --accent-red-hover: #be123c;
+            --text-primary: #ffffff;     /* Pure White */
+            --text-secondary: #a1a1aa;   /* Muted Zinc */
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --transition-smooth: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Global Reset & Base Typography */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .brand-font {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-red);
+        }
+
+        /* Subtle Ambient Radial Glow Background */
+        .hero-bg-glow {
+            background: radial-gradient(circle at 75% 30%, rgba(225, 29, 72, 0.16) 0%, rgba(9, 9, 11, 0) 55%),
+                        radial-gradient(circle at 15% 80%, rgba(225, 29, 72, 0.10) 0%, rgba(9, 9, 11, 0) 50%);
+        }
+
+        /* Glassmorphism Sticky Navbar */
+        .navbar-glass {
+            background: rgba(9, 9, 11, 0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-subtle);
+            transition: var(--transition-smooth);
+        }
+
+        .nav-link {
+            position: relative;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--text-primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--accent-red);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Premium Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-red), #9f1239);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 20px var(--accent-red-glow);
+            transition: var(--transition-smooth);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 28px rgba(225, 29, 72, 0.55);
+            background: linear-gradient(135deg, #f43f5e, var(--accent-red));
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #ffffff;
+            border: 1.5px solid var(--accent-red);
+            transition: var(--transition-smooth);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent-red);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px var(--accent-red-glow);
+        }
+
+        /* Profile Image Ring & Floating Animation */
+        @keyframes floatAvatar {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .avatar-wrapper {
+            animation: floatAvatar 5s ease-in-out infinite;
+            box-shadow: 0 0 45px rgba(225, 29, 72, 0.3);
+        }
+
+        /* Section Title Underline Accent */
+        .section-heading-accent {
+            display: inline-block;
+            position: relative;
+        }
+        .section-heading-accent::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--accent-red);
+            margin: 10px auto 0;
+            border-radius: 999px;
+        }
+
+        /* Interactive Cards (Skills, Projects, Achievements) */
+        .portfolio-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 1rem;
+            transition: var(--transition-smooth);
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(225, 29, 72, 0.55);
+            box-shadow: 0 14px 34px -10px rgba(225, 29, 72, 0.25);
+        }
+
+        /* Animated Progress Bar Fill */
+        .skill-progress-track {
+            background-color: #27272a;
+            height: 8px;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .skill-progress-fill {
+            height: 100%;
+            width: 0%; /* Animated via JS IntersectionObserver */
+            background: linear-gradient(90deg, #9f1239, var(--accent-red), #fb7185);
+            border-radius: 999px;
+            transition: width 1.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* Vertical Education Timeline */
+        .timeline-line {
+            position: relative;
+            border-left: 2px solid rgba(225, 29, 72, 0.4);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -9px;
+            top: 24px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--accent-red);
+            border: 3px solid var(--bg-primary);
+            box-shadow: 0 0 12px var(--accent-red);
+        }
+
+        /* Scroll Reveal Animation Classes */
+        .reveal-element {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.75s ease-out, transform 0.75s ease-out;
+        }
+
+        .reveal-element.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Typing Cursor Blink */
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: var(--accent-red);
+            margin-left: 4px;
+            animation: blinkCursor 0.85s infinite;
+        }
+
+        @keyframes blinkCursor {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        /* Custom Modal Overlay for Project Previews & Alerts */
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.82);
+            backdrop-filter: blur(6px);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-rose-600 selection:text-white">
+
+    <!-- =========================================================================
+         HEADER & RESPONSIVE NAVIGATION BAR
+         ========================================================================= -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 navbar-glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <a href="#home" class="flex items-center space-x-2 text-2xl font-extrabold tracking-tight brand-font">
+                    <span class="w-9 h-9 rounded-lg bg-rose-600 flex items-center justify-center text-white text-lg shadow-lg shadow-rose-600/30">
+                        R
+                    </span>
+                    <span>Ramnadh<span class="text-rose-600">.dev</span></span>
+                </a>
+
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden md:flex items-center space-x-7 text-sm">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#skills" class="nav-link">Skills</a>
+                    <a href="#education" class="nav-link">Education</a>
+                    <a href="#projects" class="nav-link">Projects</a>
+                    <a href="#achievements" class="nav-link">Achievements</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </nav>
+
+                <!-- Desktop Quick CTA -->
+                <div class="hidden md:block">
+                    <a href="#contact" class="btn-primary px-5 py-2.5 rounded-xl text-sm font-semibold inline-flex items-center gap-2">
+                        <span>Hire Me</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Mobile Hamburger Button -->
+                <button id="mobile-menu-btn" aria-label="Toggle Menu" class="md:hidden p-2.5 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 focus:outline-none transition">
+                    <i id="menu-icon" class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Slide-Down Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-zinc-950/95 border-b border-zinc-800 px-6 pt-3 pb-6 space-y-3">
+            <a href="#home" class="mobile-nav-link block py-2.5 text-base font-medium text-white hover:text-rose-500 transition">Home</a>
+            <a href="#about" class="mobile-nav-link block py-2.5 text-base font-medium text-zinc-300 hover:text-rose-500 transition">About Me</a>
+            <a href="#skills" class="mobile-nav-link block py-2.5 text-base font-medium text-zinc-300 hover:text-rose-500 transition">Skills</a>
+            <a href="#education" class="mobile-nav-link block py-2.5 text-base font-medium text-zinc-300 hover:text-rose-500 transition">Education</a>
+            <a href="#projects" class="mobile-nav-link block py-2.5 text-base font-medium text-zinc-300 hover:text-rose-500 transition">My Projects</a>
+            <a href="#achievements" class="mobile-nav-link block py-2.5 text-base font-medium text-zinc-300 hover:text-rose-500 transition">Achievements</a>
+            <a href="#contact" class="mobile-nav-link block py-2.5 text-base font-medium text-zinc-300 hover:text-rose-500 transition">Contact</a>
+        </div>
+    </header>
+
+    <!-- =========================================================================
+         1. HOME / HERO SECTION
+         ========================================================================= -->
+    <section id="home" class="min-h-screen flex items-center pt-24 pb-16 hero-bg-glow relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="max-w-4xl mx-auto text-center space-y-6">
+                
+                <!-- Centered Introduction, Academic Badges & CTA Buttons -->
+                <div class="flex flex-wrap items-center justify-center gap-3">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-600/10 border border-rose-500/30 text-rose-400 text-xs sm:text-sm font-semibold tracking-wide">
+                        <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+                        <span>Available for Internships & Web Projects</span>
+                    </div>
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-900/95 border border-zinc-700 text-xs sm:text-sm font-bold text-white">
+                        <i class="fa-solid fa-graduation-cap text-rose-500"></i>
+                        <span>CSE – 1st Year</span>
+                    </div>
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-900/95 border border-rose-500/40 text-xs sm:text-sm font-bold text-white">
+                        <i class="fa-solid fa-code text-rose-500"></i>
+                        <span>5 CSE Modules</span>
+                    </div>
+                </div>
+
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                    Hi, I'm <span class="text-rose-600">Ramnadh</span>
+                </h1>
+
+                <div class="text-xl sm:text-2xl font-semibold text-zinc-200 h-9">
+                    <span>I am a </span>
+                    <span id="typed-role" class="text-rose-500">CSE – 1st Year Student</span><span class="typing-cursor">&nbsp;</span>
+                </div>
+
+                <p class="text-zinc-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+                    A passionate Computer Science and Engineering (CSE – 1st Year) undergraduate exploring Python Programming, HTML, Generative AI (Gen AI), Mathematics, and Aptitude to build clean, responsive digital experiences.
+                </p>
+
+                <!-- Action Buttons: Download CV & Contact Me -->
+                <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
+                    <button id="download-cv-btn" type="button" class="btn-primary px-7 py-3.5 rounded-xl font-semibold text-sm sm:text-base inline-flex items-center gap-2.5 cursor-pointer">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Download CV</span>
+                    </button>
+
+                    <a href="#contact" class="btn-outline px-7 py-3.5 rounded-xl font-semibold text-sm sm:text-base inline-flex items-center gap-2.5">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>Contact Me</span>
+                    </a>
+                </div>
+
+                <!-- Quick Social Links Bar -->
+                <div class="flex items-center justify-center gap-4 pt-4">
+                    <span class="text-xs uppercase tracking-widest text-zinc-500 font-semibold">Connect:</span>
+                    <a href="#contact" aria-label="GitHub Profile" class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300 hover:text-white hover:border-rose-600 hover:bg-rose-600/15 transition">
+                        <i class="fa-brands fa-github text-lg"></i>
+                    </a>
+                    <a href="#contact" aria-label="LinkedIn Profile" class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300 hover:text-white hover:border-rose-600 hover:bg-rose-600/15 transition">
+                        <i class="fa-brands fa-linkedin-in text-lg"></i>
+                    </a>
+                    <a href="#contact" aria-label="Twitter X Profile" class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300 hover:text-white hover:border-rose-600 hover:bg-rose-600/15 transition">
+                        <i class="fa-brands fa-x-twitter text-lg"></i>
+                    </a>
+                    <a href="#contact" aria-label="CodePen Profile" class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300 hover:text-white hover:border-rose-600 hover:bg-rose-600/15 transition">
+                        <i class="fa-brands fa-codepen text-lg"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         2. ABOUT ME SECTION
+         ========================================================================= -->
+    <section id="about" class="py-20 bg-[#0d0d11] border-t border-zinc-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 reveal-element">
+                <span class="text-rose-500 font-semibold uppercase tracking-widest text-xs">Who I Am</span>
+                <h2 class="text-3xl sm:text-4xl font-bold mt-2 section-heading-accent">About Me</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center reveal-element">
+                <!-- Left Image Card -->
+                <div class="lg:col-span-5">
+                    <div class="portfolio-card p-3 overflow-hidden">
+                        <img 
+                            src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80" 
+                            alt="Developer Workspace Setup" 
+                            onerror="this.onerror=null; this.src='https://placehold.co/800x600/18181d/e11d48?text=Developer+Workspace';"
+                            class="w-full h-72 sm:h-80 object-cover rounded-xl"
+                        >
+                    </div>
+                </div>
+
+                <!-- Right Detailed Bio, Goals & Interests -->
+                <div class="lg:col-span-7 space-y-6">
+                    <h3 class="text-2xl font-bold text-white">
+                        CSE – 1st Year Student Building Strong Foundations in Programming & AI
+                    </h3>
+
+                    <p class="text-zinc-400 leading-relaxed">
+                        Hello! I am <strong class="text-white">Ramnadh</strong>, a dedicated first-year Bachelor of Technology (B.Tech) student in <strong class="text-white">Computer Science and Engineering (CSE – 1st Year)</strong>. My academic focus centers around mastering <strong class="text-white">Python Programming, HTML, Generative AI (Gen AI), Mathematics, and Aptitude</strong> while applying logical problem-solving to modern web development.
+                    </p>
+
+                    <!-- Career Goals & Education Highlight Boxes -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                        <div class="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800 hover:border-rose-500/40 transition">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i class="fa-solid fa-bullseye text-rose-500 text-lg"></i>
+                                <h4 class="font-bold text-white">Career Goal</h4>
+                            </div>
+                            <p class="text-sm text-zinc-400">
+                                To grow as a Computer Science engineer proficient in Python, Generative AI, and full-stack web technologies to build impactful real-world software.
+                            </p>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-zinc-900/90 border border-zinc-800 hover:border-rose-500/40 transition">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i class="fa-solid fa-university text-rose-500 text-lg"></i>
+                                <h4 class="font-bold text-white">CSE – 1st Year Subjects</h4>
+                            </div>
+                            <p class="text-sm text-zinc-400">
+                                Python Programming, HTML, Generative AI (Gen AI), Mathematics, and Quantitative & Logical Aptitude.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Personal Interests Tags -->
+                    <div class="pt-2">
+                        <h4 class="text-sm font-semibold uppercase tracking-wider text-zinc-300 mb-3">Interests & Hobbies</h4>
+                        <div class="flex flex-wrap gap-2.5">
+                            <span class="px-3.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-medium text-zinc-200 flex items-center gap-2">
+                                <i class="fa-solid fa-palette text-rose-500"></i> UI/UX Prototyping
+                            </span>
+                            <span class="px-3.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-medium text-zinc-200 flex items-center gap-2">
+                                <i class="fa-solid fa-laptop-code text-rose-500"></i> Open Source
+                            </span>
+                            <span class="px-3.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-medium text-zinc-200 flex items-center gap-2">
+                                <i class="fa-solid fa-trophy text-rose-500"></i> Hackathons
+                            </span>
+                            <span class="px-3.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-medium text-zinc-200 flex items-center gap-2">
+                                <i class="fa-solid fa-camera text-rose-500"></i> Tech Photography
+                            </span>
+                            <span class="px-3.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-medium text-zinc-200 flex items-center gap-2">
+                                <i class="fa-solid fa-chess-knight text-rose-500"></i> Chess
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         3. SKILLS SECTION (WITH ANIMATED PROGRESS INDICATORS)
+         ========================================================================= -->
+    <section id="skills" class="py-20 bg-[#09090b] border-t border-zinc-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 reveal-element">
+                <span class="text-rose-500 font-semibold uppercase tracking-widest text-xs">CSE – 1st Year Subjects & Performance</span>
+                <h2 class="text-3xl sm:text-4xl font-bold mt-2 section-heading-accent">My Subjects & Skills</h2>
+                <p class="text-zinc-400 max-w-2xl mx-auto mt-4 text-sm sm:text-base">
+                    Subject-wise academic progress and core CSE – 1st Year coursework proficiency.
+                </p>
+            </div>
+
+            <!-- Subject & Skill Cards Grid (5 Core Subjects) -->
+            <div id="skills-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal-element">
+                
+                <!-- Subject 1: Python Programming -->
+                <div class="portfolio-card p-6 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-12 h-12 rounded-xl bg-rose-600/15 border border-rose-500/30 flex items-center justify-center text-rose-500 text-2xl">
+                                <i class="fa-brands fa-python"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-white">Python Programming</h3>
+                                <p class="text-xs text-zinc-400">Core Syntax, Functions & Data Structures</p>
+                            </div>
+                        </div>
+                        <span class="text-rose-500 font-bold text-sm">92%</span>
+                    </div>
+                    <div class="skill-progress-track">
+                        <div class="skill-progress-fill" data-progress="92"></div>
+                    </div>
+                </div>
+
+                <!-- Subject 2: HTML -->
+                <div class="portfolio-card p-6 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-12 h-12 rounded-xl bg-rose-600/15 border border-rose-500/30 flex items-center justify-center text-rose-500 text-2xl">
+                                <i class="fa-brands fa-html5"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-white">HTML</h3>
+                                <p class="text-xs text-zinc-400">Semantic Structure, Forms & Web Pages</p>
+                            </div>
+                        </div>
+                        <span class="text-rose-500 font-bold text-sm">95%</span>
+                    </div>
+                    <div class="skill-progress-track">
+                        <div class="skill-progress-fill" data-progress="95"></div>
+                    </div>
+                </div>
+
+                <!-- Subject 3: Generative AI (Gen AI) -->
+                <div class="portfolio-card p-6 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-12 h-12 rounded-xl bg-rose-600/15 border border-rose-500/30 flex items-center justify-center text-rose-500 text-2xl">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-white">Generative AI (Gen AI)</h3>
+                                <p class="text-xs text-zinc-400">LLMs, Prompt Engineering & AI Tools</p>
+                            </div>
+                        </div>
+                        <span class="text-rose-500 font-bold text-sm">88%</span>
+                    </div>
+                    <div class="skill-progress-track">
+                        <div class="skill-progress-fill" data-progress="88"></div>
+                    </div>
+                </div>
+
+                <!-- Subject 4: Mathematics -->
+                <div class="portfolio-card p-6 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-12 h-12 rounded-xl bg-rose-600/15 border border-rose-500/30 flex items-center justify-center text-rose-500 text-2xl">
+                                <i class="fa-solid fa-square-root-variable"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-white">Mathematics</h3>
+                                <p class="text-xs text-zinc-400">Linear Algebra, Calculus & Discrete Math</p>
+                            </div>
+                        </div>
+                        <span class="text-rose-500 font-bold text-sm">90%</span>
+                    </div>
+                    <div class="skill-progress-track">
+                        <div class="skill-progress-fill" data-progress="90"></div>
+                    </div>
+                </div>
+
+                <!-- Subject 5: Aptitude -->
+                <div class="portfolio-card p-6 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3.5">
+                            <div class="w-12 h-12 rounded-xl bg-rose-600/15 border border-rose-500/30 flex items-center justify-center text-rose-500 text-2xl">
+                                <i class="fa-solid fa-brain"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-white">Aptitude</h3>
+                                <p class="text-xs text-zinc-400">Quantitative Ability & Logical Reasoning</p>
+                            </div>
+                        </div>
+                        <span class="text-rose-500 font-bold text-sm">89%</span>
+                    </div>
+                    <div class="skill-progress-track">
+                        <div class="skill-progress-fill" data-progress="89"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         4. EDUCATION & WEEKLY TIMETABLE SECTION
+         ========================================================================= -->
+    <section id="education" class="py-20 bg-[#0d0d11] border-t border-zinc-900">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 reveal-element">
+                <span class="text-rose-500 font-semibold uppercase tracking-widest text-xs">Academic Journey & Schedule</span>
+                <h2 class="text-3xl sm:text-4xl font-bold mt-2 section-heading-accent">Education & CSE Timetable</h2>
+            </div>
+
+            <div class="timeline-line ml-4 sm:ml-8 space-y-8 reveal-element">
+                
+                <!-- Education Item 1: College / B.Tech CSE 1st Year -->
+                <div class="relative pl-8">
+                    <span class="timeline-dot"></span>
+                    <div class="portfolio-card p-6 sm:p-7">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-rose-600/20 text-rose-400 border border-rose-500/30">
+                                CSE – 1st Year (Current)
+                            </span>
+                            <span class="text-sm font-semibold text-white bg-zinc-800 px-3 py-1 rounded-lg">
+                                Attendance: 94% | CGPA: 9.10 / 10.0
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mt-2">
+                            Bachelor of Technology (B.Tech) in Computer Science and Engineering (CSE)
+                        </h3>
+                        <p class="text-rose-500 font-medium text-sm mt-1">
+                            <i class="fa-solid fa-building-columns mr-1.5"></i> Department of Computer Science & Engineering – 1st Year
+                        </p>
+                        <p class="text-zinc-400 text-sm mt-3 leading-relaxed">
+                            Currently studying core 1st-year subjects: <strong class="text-zinc-200">Python Programming, HTML, Generative AI (Gen AI), Mathematics, and Aptitude</strong>. Actively participating in coding labs and AI workshops.
+                        </p>
+
+                        <!-- Weekly Subject Timetable -->
+                        <div class="mt-5 pt-4 border-t border-zinc-800">
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-rose-400 mb-3">
+                                <i class="fa-solid fa-calendar-days mr-1.5"></i> Weekly Class Timetable (CSE – 1st Year)
+                            </h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 text-xs">
+                                <div class="p-3 rounded-xl bg-zinc-900 border border-zinc-800">
+                                    <p class="font-bold text-rose-500">Monday</p>
+                                    <p class="text-white font-semibold mt-1">Python Programming</p>
+                                    <p class="text-zinc-400 mt-0.5">09:30 AM – 11:30 AM</p>
+                                </div>
+                                <div class="p-3 rounded-xl bg-zinc-900 border border-zinc-800">
+                                    <p class="font-bold text-rose-500">Tuesday</p>
+                                    <p class="text-white font-semibold mt-1">HTML Lab</p>
+                                    <p class="text-zinc-400 mt-0.5">09:30 AM – 11:30 AM</p>
+                                </div>
+                                <div class="p-3 rounded-xl bg-zinc-900 border border-zinc-800">
+                                    <p class="font-bold text-rose-500">Wednesday</p>
+                                    <p class="text-white font-semibold mt-1">Generative AI (Gen AI)</p>
+                                    <p class="text-zinc-400 mt-0.5">10:30 AM – 12:30 PM</p>
+                                </div>
+                                <div class="p-3 rounded-xl bg-zinc-900 border border-zinc-800">
+                                    <p class="font-bold text-rose-500">Thursday</p>
+                                    <p class="text-white font-semibold mt-1">Mathematics</p>
+                                    <p class="text-zinc-400 mt-0.5">09:30 AM – 11:30 AM</p>
+                                </div>
+                                <div class="p-3 rounded-xl bg-zinc-900 border border-zinc-800">
+                                    <p class="font-bold text-rose-500">Friday</p>
+                                    <p class="text-white font-semibold mt-1">Aptitude</p>
+                                    <p class="text-zinc-400 mt-0.5">11:30 AM – 01:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education Item 2: Higher Secondary (Class XII) -->
+                <div class="relative pl-8">
+                    <span class="timeline-dot"></span>
+                    <div class="portfolio-card p-6 sm:p-7">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-zinc-800 text-zinc-300">
+                                2021 – 2023
+                            </span>
+                            <span class="text-sm font-semibold text-white bg-zinc-800 px-3 py-1 rounded-lg">
+                                Aggregate: 92.4%
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mt-2">
+                            Senior Secondary Education (Class XII – Science & Mathematics)
+                        </h3>
+                        <p class="text-rose-500 font-medium text-sm mt-1">
+                            <i class="fa-solid fa-school mr-1.5"></i> St. Xavier's Senior Secondary Academy
+                        </p>
+                        <p class="text-zinc-400 text-sm mt-3 leading-relaxed">
+                            Completed higher secondary studies with Physics, Chemistry, Mathematics, and Computer Science (Python & SQL). Awarded Merit Certificate for scoring 98/100 in Computer Science.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Education Item 3: Secondary School (Class X) -->
+                <div class="relative pl-8">
+                    <span class="timeline-dot"></span>
+                    <div class="portfolio-card p-6 sm:p-7">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-zinc-800 text-zinc-300">
+                                2020 – 2021
+                            </span>
+                            <span class="text-sm font-semibold text-white bg-zinc-800 px-3 py-1 rounded-lg">
+                                Aggregate: 94.0%
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mt-2">
+                            Secondary School Examination (Class X)
+                        </h3>
+                        <p class="text-rose-500 font-medium text-sm mt-1">
+                            <i class="fa-solid fa-school mr-1.5"></i> St. Xavier's Senior Secondary Academy
+                        </p>
+                        <p class="text-zinc-400 text-sm mt-3 leading-relaxed">
+                            Built strong analytical and logical foundations while participating in inter-school science exhibitions and basic HTML web design workshops.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         5. MY PROJECTS SECTION
+         ========================================================================= -->
+    <section id="projects" class="py-20 bg-[#09090b] border-t border-zinc-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 reveal-element">
+                <span class="text-rose-500 font-semibold uppercase tracking-widest text-xs">Featured Work</span>
+                <h2 class="text-3xl sm:text-4xl font-bold mt-2 section-heading-accent">My Projects</h2>
+                <p class="text-zinc-400 max-w-2xl mx-auto mt-4 text-sm sm:text-base">
+                    A showcase of web applications built with clean architecture, responsive layouts, and interactive features.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 reveal-element">
+                
+                <!-- Project Card 1 -->
+                <article class="portfolio-card overflow-hidden flex flex-col justify-between group">
+                    <div>
+                        <div class="relative overflow-hidden h-52">
+                            <img 
+                                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" 
+                                alt="Smart Campus Task Manager Dashboard" 
+                                onerror="this.onerror=null; this.src='https://placehold.co/800x500/18181d/e11d48?text=Campus+Task+Manager';"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            >
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-80"></div>
+                            <span class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold bg-rose-600 text-white shadow">
+                                Web App
+                            </span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="text-xl font-bold text-white group-hover:text-rose-500 transition">
+                                CampusFlow Student Planner
+                            </h3>
+                            <p class="text-zinc-400 text-sm leading-relaxed">
+                                An interactive academic task manager and Pomodoro study timer tailored for CSE – 1st Year subjects including Python Programming, HTML, and Mathematics.
+                            </p>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-800 text-rose-400">HTML</span>
+                                <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-800 text-rose-400">Python Programming</span>
+                                <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-800 text-rose-400">JavaScript</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-2">
+                        <button 
+                            type="button"
+                            data-project="0"
+                            class="view-project-btn btn-outline w-full py-2.5 rounded-xl text-sm font-semibold inline-flex items-center justify-center gap-2 cursor-pointer"
+                        >
+                            <span>View Project</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Project Card 2 -->
+                <article class="portfolio-card overflow-hidden flex flex-col justify-between group">
+                    <div>
+                        <div class="relative overflow-hidden h-52">
+                            <img 
+                                src="https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&w=800&q=80" 
+                                alt="CrimsonCart E-Commerce Storefront" 
+                                onerror="this.onerror=null; this.src='https://placehold.co/800x500/18181d/e11d48?text=CrimsonCart+Store';"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            >
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-80"></div>
+                            <span class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold bg-rose-600 text-white shadow">
+                                E-Commerce
+                            </span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="text-xl font-bold text-white group-hover:text-rose-500 transition">
+                                GenAI Prompt & Study Assistant
+                            </h3>
+                            <p class="text-zinc-400 text-sm leading-relaxed">
+                                A clean web interface built to organize Generative AI prompts, Mathematics formulas, and Aptitude practice sets for quick semester revision.
+                            </p>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-800 text-rose-400">HTML</span>
+                                <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-800 text-rose-400">Generative AI</span>
+                                <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-800 text-rose-400">CSS3</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-2">
+                        <button 
+                            type="button"
+                            data-project="1"
+                            class="view-project-btn btn-outline w-full py-2.5 rounded-xl text-sm font-semibold inline-flex items-center justify-center gap-2 cursor-pointer"
+                        >
+                            <span>View Project</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Project Card 3 -->
+                <article class="portfolio-card overflow-hidden flex flex-col justify-between group">
+                    <div>
+                        <div class="relative overflow-hidden h-52">
+                            <img 
+                                src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=800&q=80" 
+                                alt="Weather & Air Quality Analytics App" 
+                                onerror="this.onerror=null; this.src='https://placehold.co/800x500/18181d/e11d48?text=SkyPulse+Weather';"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            >
+                            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-80"></div>
+                            <span class="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold bg-rose-600 text-white shadow">
+                                API Integration
+                            </span>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="text-xl font-bold text-white group-hover:text-rose-500 transition">
+                                PyMath & Aptitude Quiz Portal
+                            </h3>
+                            <p class="text-zinc-400 text-sm leading-relaxed">
+                                Interactive problem-solving tracker combining Python Programming scripts with timed Mathematics and Aptitude mock evaluations.
+                            </p>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-800 text-rose-400">Python Programming</span>
+                                <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-800 text-rose-400">Mathematics</span>
+                                <span class="px-2.5 py-1 text-xs font-medium rounded-md bg-zinc-800 text-rose-400">Aptitude</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-2">
+                        <button 
+                            type="button"
+                            data-project="2"
+                            class="view-project-btn btn-outline w-full py-2.5 rounded-xl text-sm font-semibold inline-flex items-center justify-center gap-2 cursor-pointer"
+                        >
+                            <span>View Project</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </button>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         6. ACHIEVEMENTS & ACADEMIC NOTIFICATIONS SECTION
+         ========================================================================= -->
+    <section id="achievements" class="py-20 bg-[#0d0d11] border-t border-zinc-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 reveal-element">
+                <span class="text-rose-500 font-semibold uppercase tracking-widest text-xs">Milestones & Academic Notifications</span>
+                <h2 class="text-3xl sm:text-4xl font-bold mt-2 section-heading-accent">Achievements & Updates</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal-element">
+                
+                <!-- Achievement 1 -->
+                <div class="portfolio-card p-6 flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-rose-600/15 border border-rose-500/30 flex items-center justify-center text-rose-500 text-xl shrink-0">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-rose-500">CSE – 1st Year Notification • Lab</span>
+                        <h3 class="text-lg font-bold text-white mt-1">Python Programming & HTML Practical Assessment</h3>
+                        <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
+                            Completed all 1st-year lab exercises in Python Programming and semantic HTML page structuring with top evaluation remarks.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Achievement 2 -->
+                <div class="portfolio-card p-6 flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-rose-600/15 border border-rose-500/30 flex items-center justify-center text-rose-500 text-xl shrink-0">
+                        <i class="fa-solid fa-certificate"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-rose-500">Workshop Certification • Gen AI</span>
+                        <h3 class="text-lg font-bold text-white mt-1">Generative AI (Gen AI) Foundations Workshop</h3>
+                        <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
+                            Earned certification in Generative AI workflows, prompt design, and AI-assisted software development for CSE – 1st Year students.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Achievement 3 -->
+                <div class="portfolio-card p-6 flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-rose-600/15 border border-rose-500/30 flex items-center justify-center text-rose-500 text-xl shrink-0">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-rose-500">Academic Performance • CSE</span>
+                        <h3 class="text-lg font-bold text-white mt-1">Top Performer in Mathematics & Aptitude</h3>
+                        <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
+                            Scored 90%+ in internal assessments across Mathematics and Quantitative Aptitude in the Computer Science and Engineering department.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Achievement 4 -->
+                <div class="portfolio-card p-6 flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-rose-600/15 border border-rose-500/30 flex items-center justify-center text-rose-500 text-xl shrink-0">
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-rose-500">Department Notice • CSE – 1st Year</span>
+                        <h3 class="text-lg font-bold text-white mt-1">Upcoming Semester Seminar & Coding Sprint</h3>
+                        <p class="text-zinc-400 text-sm mt-2 leading-relaxed">
+                            Scheduled presentation on Generative AI (Gen AI) and Python Programming applications for the CSE – 1st Year cohort.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         7. CONTACT SECTION (WITH REAL-TIME FORM VALIDATION)
+         ========================================================================= -->
+    <section id="contact" class="py-20 bg-[#09090b] border-t border-zinc-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 reveal-element">
+                <span class="text-rose-500 font-semibold uppercase tracking-widest text-xs">Get In Touch</span>
+                <h2 class="text-3xl sm:text-4xl font-bold mt-2 section-heading-accent">Contact Me</h2>
+                <p class="text-zinc-400 max-w-2xl mx-auto mt-4 text-sm sm:text-base">
+                    Have a project idea, internship opportunity, or feedback? Send me a message below!
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 reveal-element">
+                
+                <!-- Left Column: Direct Contact Info & Social Links -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="portfolio-card p-7 space-y-6">
+                        <h3 class="text-2xl font-bold text-white">Let's Build Something Great Together</h3>
+                        <p class="text-zinc-400 text-sm leading-relaxed">
+                            I am actively looking for Summer Web Development Internships and collaborative student projects. Feel free to reach out via email or the contact form.
+                        </p>
+
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4">
+                                <div class="w-11 h-11 rounded-xl bg-rose-600/15 border border-rose-500/30 flex items-center justify-center text-rose-500">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-zinc-400">Email Address</p>
+                                    <p class="text-sm font-semibold text-white">ramnadh.cse@example.com</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4">
+                                <div class="w-11 h-11 rounded-xl bg-rose-600/15 border border-rose-500/30 flex items-center justify-center text-rose-500">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-zinc-400">Department</p>
+                                    <p class="text-sm font-semibold text-white">Computer Science and Engineering (CSE)</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4">
+                                <div class="w-11 h-11 rounded-xl bg-rose-600/15 border border-rose-500/30 flex items-center justify-center text-rose-500">
+                                    <i class="fa-solid fa-graduation-cap"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-zinc-400">Academic Status</p>
+                                    <p class="text-sm font-semibold text-white">CSE – 1st Year Student</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Social Media Links -->
+                        <div class="pt-4 border-t border-zinc-800">
+                            <p class="text-xs uppercase tracking-wider text-zinc-400 font-semibold mb-3">Follow My Work</p>
+                            <div class="flex items-center gap-3">
+                                <a href="#home" aria-label="GitHub" class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300 hover:text-white hover:bg-rose-600 hover:border-rose-600 transition">
+                                    <i class="fa-brands fa-github"></i>
+                                </a>
+                                <a href="#home" aria-label="LinkedIn" class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300 hover:text-white hover:bg-rose-600 hover:border-rose-600 transition">
+                                    <i class="fa-brands fa-linkedin-in"></i>
+                                </a>
+                                <a href="#home" aria-label="Twitter" class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300 hover:text-white hover:bg-rose-600 hover:border-rose-600 transition">
+                                    <i class="fa-brands fa-x-twitter"></i>
+                                </a>
+                                <a href="#home" aria-label="Instagram" class="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300 hover:text-white hover:bg-rose-600 hover:border-rose-600 transition">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Validated Contact Form -->
+                <div class="lg:col-span-7">
+                    <form id="contact-form" novalidate class="portfolio-card p-7 sm:p-8 space-y-5">
+                        <!-- Name Input -->
+                        <div>
+                            <label for="contact-name" class="block text-sm font-semibold text-zinc-200 mb-2">
+                                Full Name <span class="text-rose-500">*</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="contact-name" 
+                                name="name"
+                                placeholder="Enter your full name"
+                                class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white placeholder-zinc-500 focus:outline-none focus:border-rose-500 transition"
+                            >
+                            <p id="error-name" class="hidden text-rose-500 text-xs mt-1.5 font-medium"></p>
+                        </div>
+
+                        <!-- Email Input -->
+                        <div>
+                            <label for="contact-email" class="block text-sm font-semibold text-zinc-200 mb-2">
+                                Email Address <span class="text-rose-500">*</span>
+                            </label>
+                            <input 
+                                type="email" 
+                                id="contact-email" 
+                                name="email"
+                                placeholder="you@example.com"
+                                class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white placeholder-zinc-500 focus:outline-none focus:border-rose-500 transition"
+                            >
+                            <p id="error-email" class="hidden text-rose-500 text-xs mt-1.5 font-medium"></p>
+                        </div>
+
+                        <!-- Message Input -->
+                        <div>
+                            <label for="contact-message" class="block text-sm font-semibold text-zinc-200 mb-2">
+                                Your Message <span class="text-rose-500">*</span>
+                            </label>
+                            <textarea 
+                                id="contact-message" 
+                                name="message" 
+                                rows="4"
+                                placeholder="Write your message or project inquiry here..."
+                                class="w-full px-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white placeholder-zinc-500 focus:outline-none focus:border-rose-500 transition resize-none"
+                            ></textarea>
+                            <p id="error-message" class="hidden text-rose-500 text-xs mt-1.5 font-medium"></p>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn-primary w-full py-3.5 rounded-xl font-semibold text-base inline-flex items-center justify-center gap-2.5 cursor-pointer">
+                            <span>Send Message</span>
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+
+                        <!-- Inline Form Feedback Banner -->
+                        <div id="form-feedback" class="hidden p-4 rounded-xl text-sm font-medium"></div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         8. FOOTER SECTION
+         ========================================================================= -->
+    <footer class="bg-[#060608] border-t border-zinc-900 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-zinc-900">
+                <!-- Brand -->
+                <a href="#home" class="flex items-center space-x-2 text-xl font-extrabold brand-font">
+                    <span class="w-8 h-8 rounded-lg bg-rose-600 flex items-center justify-center text-white text-sm">R</span>
+                    <span>Ramnadh<span class="text-rose-600">.dev</span></span>
+                </a>
+
+                <!-- Footer Quick Navigation Links -->
+                <div class="flex flex-wrap justify-center gap-6 text-sm text-zinc-400">
+                    <a href="#home" class="hover:text-rose-500 transition">Home</a>
+                    <a href="#about" class="hover:text-rose-500 transition">About</a>
+                    <a href="#skills" class="hover:text-rose-500 transition">Skills</a>
+                    <a href="#education" class="hover:text-rose-500 transition">Education</a>
+                    <a href="#projects" class="hover:text-rose-500 transition">Projects</a>
+                    <a href="#achievements" class="hover:text-rose-500 transition">Achievements</a>
+                    <a href="#contact" class="hover:text-rose-500 transition">Contact</a>
+                </div>
+
+                <!-- Footer Social Links -->
+                <div class="flex items-center gap-3">
+                    <a href="#home" aria-label="GitHub" class="w-9 h-9 rounded-lg bg-zinc-900 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-rose-600 transition">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                    <a href="#home" aria-label="LinkedIn" class="w-9 h-9 rounded-lg bg-zinc-900 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-rose-600 transition">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                    <a href="#home" aria-label="Twitter" class="w-9 h-9 rounded-lg bg-zinc-900 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-rose-600 transition">
+                        <i class="fa-brands fa-x-twitter"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
+                <p>&copy; <span id="current-year">2026</span> Ramnadh (CSE – 1st Year). All rights reserved.</p>
+                <a href="#home" class="inline-flex items-center gap-1.5 text-zinc-400 hover:text-rose-500 font-medium transition">
+                    <span>Back to Top</span>
+                    <i class="fa-solid fa-arrow-up"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- =========================================================================
+         INTERACTIVE PROJECT DETAILS MODAL (NO BROWSER ALERT/POPUP)
+         ========================================================================= -->
+    <div id="project-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 modal-backdrop" role="dialog" aria-modal="true">
+        <div class="bg-zinc-950 border border-zinc-800 rounded-2xl max-w-xl w-full overflow-hidden shadow-2xl transform transition-all">
+            <div class="relative h-56">
+                <img id="modal-img" src="" alt="Project Preview" class="w-full h-full object-cover">
+                <button id="close-modal-btn" aria-label="Close Modal" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-zinc-950/80 text-white hover:bg-rose-600 flex items-center justify-center transition cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="flex items-center justify-between gap-2">
+                    <h3 id="modal-title" class="text-2xl font-bold text-white"></h3>
+                    <span id="modal-category" class="px-3 py-1 rounded-full text-xs font-bold bg-rose-600/20 text-rose-400 border border-rose-500/30"></span>
+                </div>
+                <p id="modal-desc" class="text-zinc-300 text-sm leading-relaxed"></p>
+                <div>
+                    <h4 class="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">Key Highlights & Architecture</h4>
+                    <ul id="modal-features" class="list-disc list-inside text-sm text-zinc-400 space-y-1"></ul>
+                </div>
+                <div class="pt-2 flex justify-end gap-3">
+                    <button id="modal-done-btn" type="button" class="btn-primary px-5 py-2.5 rounded-xl text-sm font-semibold cursor-pointer">
+                        Close Preview
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================================
+         JAVASCRIPT SECTION (Can be extracted directly into Portfolio/script.js)
+         ========================================================================= -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. Set Dynamic Copyright Year
+            const yearEl = document.getElementById("current-year");
+            if (yearEl) {
+                yearEl.textContent = new Date().getFullYear();
+            }
+
+            // 2. Responsive Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+            const mobileMenu = document.getElementById("mobile-menu");
+            const menuIcon = document.getElementById("menu-icon");
+            const mobileLinks = document.querySelectorAll(".mobile-nav-link");
+
+            function toggleMobileMenu() {
+                const isHidden = mobileMenu.classList.contains("hidden");
+                if (isHidden) {
+                    mobileMenu.classList.remove("hidden");
+                    menuIcon.classList.remove("fa-bars");
+                    menuIcon.classList.add("fa-xmark");
+                } else {
+                    mobileMenu.classList.add("hidden");
+                    menuIcon.classList.remove("fa-xmark");
+                    menuIcon.classList.add("fa-bars");
+                }
+            }
+
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener("click", toggleMobileMenu);
+            }
+
+            // Close mobile menu when any navigation link is clicked
+            mobileLinks.forEach(link => {
+                link.addEventListener("click", () => {
+                    mobileMenu.classList.add("hidden");
+                    menuIcon.classList.remove("fa-xmark");
+                    menuIcon.classList.add("fa-bars");
+                });
+            });
+
+            // 3. Hero Section Typing Animation
+            const roles = [
+                "CSE – 1st Year Student",
+                "Python & HTML Developer",
+                "Generative AI Explorer",
+                "Mathematics & Aptitude Enthusiast"
+            ];
+            const typedRoleEl = document.getElementById("typed-role");
+            let roleIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+
+            function typeRoleEffect() {
+                if (!typedRoleEl) return;
+                const currentRole = roles[roleIndex];
+
+                if (isDeleting) {
+                    typedRoleEl.textContent = currentRole.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    typedRoleEl.textContent = currentRole.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+
+                let typingSpeed = isDeleting ? 45 : 95;
+
+                if (!isDeleting && charIndex === currentRole.length) {
+                    typingSpeed = 1800; // Pause at full word
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    roleIndex = (roleIndex + 1) % roles.length;
+                    typingSpeed = 400;
+                }
+
+                setTimeout(typeRoleEffect, typingSpeed);
+            }
+            typeRoleEffect();
+
+            // 4. Download CV Button (Generates & Downloads a Clean Formatted Resume File)
+            const downloadCvBtn = document.getElementById("download-cv-btn");
+            if (downloadCvBtn) {
+                downloadCvBtn.addEventListener("click", () => {
+                    const resumeContent = [
+                        "============================================================",
+                        "RAMNADH - STUDENT ACADEMIC PROFILE & CV",
+                        "Department: Computer Science and Engineering (CSE) | Year: 1st Year",
+                        "Email: ramnadh.cse@example.com",
+                        "============================================================",
+                        "",
+                        "SUMMARY:",
+                        "Dedicated CSE – 1st Year undergraduate building strong foundations in",
+                        "Python Programming, HTML, Generative AI (Gen AI), Mathematics, and Aptitude.",
+                        "",
+                        "EDUCATION:",
+                        "- B.Tech in Computer Science and Engineering (CSE – 1st Year) | CGPA: 9.10/10",
+                        "- Class XII (Science & Mathematics) | 92.4%",
+                        "",
+                        "CSE – 1ST YEAR SUBJECTS & MARKS:",
+                        "1. Python Programming : 92%",
+                        "2. HTML               : 95%",
+                        "3. Generative AI      : 88%",
+                        "4. Mathematics        : 90%",
+                        "5. Aptitude           : 89%",
+                        "",
+                        "KEY PROJECTS:",
+                        "1. CampusFlow Student Planner (HTML, Python Programming, JavaScript)",
+                        "2. GenAI Prompt & Study Assistant (HTML, Generative AI, CSS3)",
+                        "3. PyMath & Aptitude Quiz Portal (Python Programming, Mathematics, Aptitude)",
+                        "============================================================"
+                    ].join("\n");
+
+                    const blob = new Blob([resumeContent], { type: "text/plain;charset=utf-8" });
+                    const url = URL.createObjectURL(blob);
+                    const tempLink = document.createElement("a");
+                    tempLink.href = url;
+                    tempLink.download = "Ramnadh_CSE_1st_Year_Profile.txt";
+                    document.body.appendChild(tempLink);
+                    tempLink.click();
+                    document.body.removeChild(tempLink);
+                    URL.revokeObjectURL(url);
+                });
+            }
+
+            // 5. Scroll Reveal & Animated Skill Progress Bars via IntersectionObserver
+            const revealElements = document.querySelectorAll(".reveal-element");
+            const skillBars = document.querySelectorAll(".skill-progress-fill");
+            let skillsAnimated = false;
+
+            const observerOptions = {
+                threshold: 0.15
+            };
+
+            const scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-visible");
+
+                        // Trigger skill bar width animations when skills grid enters view
+                        if (entry.target.id === "skills-grid" && !skillsAnimated) {
+                            skillsAnimated = true;
+                            skillBars.forEach(bar => {
+                                const targetPercent = bar.getAttribute("data-progress");
+                                bar.style.width = `${targetPercent}%`;
+                            });
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            revealElements.forEach(el => scrollObserver.observe(el));
+
+            // 6. Active Navigation Link Highlight on Scroll
+            const sections = document.querySelectorAll("section[id]");
+            const navLinks = document.querySelectorAll(".nav-link");
+
+            window.addEventListener("scroll", () => {
+                let currentSectionId = "";
+                const scrollPosition = window.scrollY + 140;
+
+                sections.forEach(section => {
+                    const top = section.offsetTop;
+                    const height = section.offsetHeight;
+                    if (scrollPosition >= top && scrollPosition < top + height) {
+                        currentSectionId = section.getAttribute("id");
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove("active");
+                    if (link.getAttribute("href") === `#${currentSectionId}`) {
+                        link.classList.add("active");
+                    }
+                });
+            });
+
+            // 7. Interactive Project Modal Preview
+            const projectData = [
+                {
+                    title: "CampusFlow Student Planner",
+                    category: "Web App",
+                    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+                    desc: "A comprehensive academic productivity dashboard designed for Ramnadh's CSE – 1st Year schedule to organize assignments across Python Programming, HTML, Generative AI, Mathematics, and Aptitude.",
+                    features: [
+                        "Built with semantic HTML, custom CSS3 variables, and modular Vanilla JavaScript.",
+                        "Persistent browser storage using localStorage so subject tasks never vanish on refresh.",
+                        "Mobile-first responsive layout with instant subject filtering."
+                    ]
+                },
+                {
+                    title: "GenAI Prompt & Study Assistant",
+                    category: "Generative AI",
+                    img: "https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&w=800&q=80",
+                    desc: "A clean black-and-red web interface created to organize Generative AI (Gen AI) prompts, Python code snippets, and Mathematics notes for quick CSE – 1st Year revision.",
+                    features: [
+                        "Responsive CSS Grid catalog adapting smoothly across mobile, tablet, and desktop.",
+                        "Real-time search and subject filters without page reloads.",
+                        "Structured HTML templates for fast study note organization."
+                    ]
+                },
+                {
+                    title: "PyMath & Aptitude Quiz Portal",
+                    category: "Academic Tool",
+                    img: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=800&q=80",
+                    desc: "An interactive problem-solving practice portal combining Python Programming logic exercises with timed Mathematics and Aptitude assessments.",
+                    features: [
+                        "Automated score calculation and subject-wise accuracy tracking.",
+                        "Covers quantitative Aptitude and discrete Mathematics problem sets.",
+                        "Clean dark-mode UI engineered for high contrast and readability."
+                    ]
+                }
+            ];
+
+            const projectModal = document.getElementById("project-modal");
+            const closeModalBtn = document.getElementById("close-modal-btn");
+            const modalDoneBtn = document.getElementById("modal-done-btn");
+            const viewProjectBtns = document.querySelectorAll(".view-project-btn");
+
+            function openProjectModal(index) {
+                const project = projectData[index];
+                if (!project) return;
+
+                document.getElementById("modal-img").src = project.img;
+                document.getElementById("modal-title").textContent = project.title;
+                document.getElementById("modal-category").textContent = project.category;
+                document.getElementById("modal-desc").textContent = project.desc;
+
+                const featuresList = document.getElementById("modal-features");
+                featuresList.innerHTML = "";
+                project.features.forEach(item => {
+                    const li = document.createElement("li");
+                    li.textContent = item;
+                    featuresList.appendChild(li);
+                });
+
+                projectModal.classList.remove("hidden");
+                projectModal.classList.add("flex");
+            }
+
+            function closeProjectModal() {
+                projectModal.classList.add("hidden");
+                projectModal.classList.remove("flex");
+            }
+
+            viewProjectBtns.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const idx = parseInt(btn.getAttribute("data-project"), 10);
+                    openProjectModal(idx);
+                });
+            });
+
+            if (closeModalBtn) closeModalBtn.addEventListener("click", closeProjectModal);
+            if (modalDoneBtn) modalDoneBtn.addEventListener("click", closeProjectModal);
+            if (projectModal) {
+                projectModal.addEventListener("click", (e) => {
+                    if (e.target === projectModal) closeProjectModal();
+                });
+            }
+
+            // 8. Contact Form Validation & Submission Handler
+            const contactForm = document.getElementById("contact-form");
+            const nameInput = document.getElementById("contact-name");
+            const emailInput = document.getElementById("contact-email");
+            const messageInput = document.getElementById("contact-message");
+
+            const errorName = document.getElementById("error-name");
+            const errorEmail = document.getElementById("error-email");
+            const errorMessage = document.getElementById("error-message");
+            const formFeedback = document.getElementById("form-feedback");
+
+            function showFieldError(inputEl, errorEl, msg) {
+                errorEl.textContent = msg;
+                errorEl.classList.remove("hidden");
+                inputEl.classList.add("border-rose-500");
+            }
+
+            function clearFieldError(inputEl, errorEl) {
+                errorEl.textContent = "";
+                errorEl.classList.add("hidden");
+                inputEl.classList.remove("border-rose-500");
+            }
+
+            if (contactForm) {
+                contactForm.addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    let isValid = true;
+
+                    // Validate Name
+                    const nameVal = nameInput.value.trim();
+                    if (nameVal.length < 2) {
+                        showFieldError(nameInput, errorName, "Please enter your full name (at least 2 characters).");
+                        isValid = false;
+                    } else {
+                        clearFieldError(nameInput, errorName);
+                    }
+
+                    // Validate Email with Standard Regex
+                    const emailVal = emailInput.value.trim();
+                    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailPattern.test(emailVal)) {
+                        showFieldError(emailInput, errorEmail, "Please enter a valid email address (e.g., name@domain.com).");
+                        isValid = false;
+                    } else {
+                        clearFieldError(emailInput, errorEmail);
+                    }
+
+                    // Validate Message
+                    const messageVal = messageInput.value.trim();
+                    if (messageVal.length < 10) {
+                        showFieldError(messageInput, errorMessage, "Please write a message of at least 10 characters.");
+                        isValid = false;
+                    } else {
+                        clearFieldError(messageInput, errorMessage);
+                    }
+
+                    // Show Feedback Banner
+                    formFeedback.classList.remove("hidden");
+                    if (isValid) {
+                        formFeedback.className = "p-4 rounded-xl text-sm font-medium bg-emerald-500/15 border border-emerald-500/40 text-emerald-300";
+                        formFeedback.innerHTML = `<i class="fa-solid fa-circle-check mr-2"></i> Thank you, <strong>${nameVal}</strong>! Your message has been validated and sent successfully.`;
+                        contactForm.reset();
+                    } else {
+                        formFeedback.className = "p-4 rounded-xl text-sm font-medium bg-rose-500/15 border border-rose-500/40 text-rose-300";
+                        formFeedback.innerHTML = `<i class="fa-solid fa-circle-exclamation mr-2"></i> Please fix the highlighted errors above before submitting.`;
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
